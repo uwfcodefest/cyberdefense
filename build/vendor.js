@@ -10,9 +10,8 @@ var gulp = require('gulp'),
 	utils = require('./utils'),
 	pack = require('../package'),
 	path = require('path'),
-	fs = require('fs'),
-	q = require('q'),
-	ncp = require('ncp');
+	fse = require('fs-extra'),
+	q = require('q');
 
 module.exports = {
 	vendorCSS: vendorCSS, 
@@ -76,12 +75,11 @@ function vendorCSS(cb) {
 
 function vendorMisc(cb) {
 	q.nfcall(
-		ncp.ncp, 
+		fse.copy,
 		path.resolve(pack.paths.src.vendor.fonts), 
 		path.resolve(pack.paths.dist.vendor.fonts))
 			.then(
 				() => {
-					console.log('VendorMisc complete');
 					cb();
 				}, 
 				err => console.error(err));

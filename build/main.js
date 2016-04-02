@@ -1,15 +1,13 @@
 /*eslint-env node */
 var gulp = require('gulp'),
-	fs = require('fs'),
+    fse = require('fs-extra'),
 	chalk = require('chalk'),
 	argv = require('yargs').argv,
 	pack = require('../package'),
-	path = require('path'),
 	spawn = require('child_process').spawn,
 	async = require('async'),
 	q = require('q'),
 	semver = require('semver'),
-	rimraf = require('rimraf'),
 	config = require('../server/config');
 
 var app = require('./app');
@@ -36,10 +34,10 @@ gulp.task('build', function (cb) {
 
 function clean(cb) {
 	q.all([
-			q.nfcall(rimraf, 'assets/css'),
-			q.nfcall(rimraf, 'assets/js'),
-			q.nfcall(rimraf, 'assets/fonts'),
-			q.nfcall(rimraf, 'assets/index.html')
+			q.nfcall(fse.remove, 'assets/css'),
+			q.nfcall(fse.remove, 'assets/js'),
+			q.nfcall(fse.remove, 'assets/fonts'),
+			q.nfcall(fse.remove, 'assets/index.html')
 		])
 		.then(() => cb())
 }
@@ -59,7 +57,7 @@ function bump() {
 	
 	pack.version = semver.inc(pack.version, bumpType);
 	
-	fs.writeFileSync('./package.json', JSON.stringify(pack, null, 2));
+	fse.writeJson('./package.json', pack, {spaces: 2});
 	
 	console.log(chalk.green('Bumped to', pack.version));
 }

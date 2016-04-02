@@ -12,10 +12,8 @@ var gulp = require('gulp'),
 	buffer = require('vinyl-buffer'),
 	pack = require('../package'),
 	utils = require('./utils'),
-	fs = require('fs'),
-	path = require('path'),
-	ncp = require('ncp'),
-	_ = require('lodash');
+	fse = require('fs-extra'),
+	path = require('path');
 
 function makeBundle(cb) {
 	return browserify({
@@ -31,7 +29,7 @@ function makeBundle(cb) {
 }
 
 function appJS(cb) {
-	ncp.ncp(path.resolve('public/index.html'), path.resolve('assets/index.html'), () => {
+	fse.copy(path.resolve('public/index.html'), path.resolve('assets/index.html'), () => {
 		bundleApp(makeBundle(cb))
 	});
 }
