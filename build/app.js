@@ -29,7 +29,9 @@ function makeBundle(cb) {
 }
 
 function appJS(cb) {
-	fse.copy(path.resolve('public/index.html'), path.resolve('assets/index.html'), () => {
+	fse.copy(path.resolve('public/index.html'), path.resolve('assets/index.html'), (err) => {
+		if (err)
+			console.error(err);
 		bundleApp(makeBundle(cb))
 	});
 }
@@ -104,6 +106,7 @@ gulp.task('test', appTest);
 
 gulp.task('watch:app', function () {
 	gulp.watch([pack.paths.src.app.scss], ['appSCSS']);
+	gulp.watch([pack.paths.src.app.js], ['appJS']);
 	return watchAppJS();
 });
 

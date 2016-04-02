@@ -14,8 +14,6 @@ var path = require('path'),
 	dbgReq = debug('app:request'),
 	errors = require('./libs/errors');
 
-import DB from './db';
-
 module.exports = function () {
 	dbgInit('Creating new app');
 	var app = express();
@@ -25,12 +23,6 @@ module.exports = function () {
 
 	// Use IP address from HAProxy X-Forwarded-For header
 	app.enable('trust proxy');
-
-	app.db = DB;
-	app.use((req, res, next) => {
-		req.db = DB;
-		next();
-	});
 
 	http.globalAgent.maxSockets = config.connectionPool;
 
@@ -69,18 +61,7 @@ module.exports = function () {
 	});
 
 	app.ready = require('./api.js')(app)
-		.then(() =>	dbgInit('API initialized!') || DB.connect(config.db))
-		// Wait for DB connection to come up
-		.then(
-			() => dbgInit('DB initialized!') ||
-			// Run DB bootstrap if this is a clean DB
-			DB.checkBootstrap()
-				.catch(err => {
-						if (err)
-							dbgErr('Bootstrap failed!') || dbgErr(err);
-					}
-				)
-		)
+		.then(() =>	dbgInit('API initialized!'))
 		// Attach error handling
 		.then(
 			() => handleRequests(app),

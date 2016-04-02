@@ -1,0 +1,71 @@
+@import "includes";
+
+
+.game-container {
+	margin-top: 2em;
+}
+
+.game {
+	text-align: center;
+	.header-container {
+		
+	}
+	
+	&.encryption {
+		
+		.game-body {
+			width: 90%;
+			margin: auto;
+			max-width: 800px;
+		}
+		
+		.binary.grid {
+			box-shadow: none;
+			font-weight: bold;
+			
+			.column {
+				font-size: 2em;
+				line-height: 1.4em;
+			}
+			
+			
+			.row {
+				box-shadow: none;
+				
+				.column {
+					border: 1px solid $red;
+					border-top: none;
+					
+					&:last-child {
+						border: none;
+						box-shadow: none;
+					}
+					
+					&.answer {
+						color: $blue;
+						border-bottom: 2px solid black;
+						
+						&.correct {
+							background-color: #73c674;
+						}
+					}
+					
+				}
+				
+				&.binary-helper {
+					box-shadow: none;
+					
+					.column {
+						box-shadow: none;
+						border: none;
+						border-bottom: 1px solid $red;
+
+						&:last-child {
+							border: none;
+						}
+					}
+				}
+			}
+		}
+	}
+}

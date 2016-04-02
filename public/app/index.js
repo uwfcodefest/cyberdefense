@@ -16,7 +16,7 @@ browserHistory.listen((loc) => {
 });
 
 function render(props) {
-	ReactDOM.render(<Router {...props}/>, document.querySelector('#app'));
+	ReactDOM.render(<Router {...props}/>, document.querySelector('body'));
 }
 
 function route() {
@@ -28,7 +28,7 @@ function route() {
 		}
 		else if (err || !renderProps) {
 			console.log(`Route Not Found`);
-			browserHistory.push('/login');
+			browserHistory.push('/');
 			route();
 		}
 		else {

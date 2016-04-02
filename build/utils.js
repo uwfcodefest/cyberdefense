@@ -10,10 +10,10 @@ var Utils = module.exports = {};
 
 
 Utils.notify = function (msg) {
-	notify.notify({
-		title: config.app.title || 'Notification',
-		message: msg
-	});
+	// notify.notify({
+	// 	title: config.app.title || 'Notification',
+	// 	message: msg
+	// });
 };
 
 Utils.onEnd = function (msg, color) {
