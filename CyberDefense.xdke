@@ -1,0 +1,16 @@
+{
+  "project": {
+    "projectSettingsVersion": "3.0.0",
+    "initialAutoPluginCount": 0,
+    "currentBuildConfiguration": "WebApp",
+    "projectFiles": {},
+    "projectDirectories": {},
+    "currentService": {
+      "endPoint": "Details-",
+      "service": "googleplaces"
+    }
+  },
+  "editorTab": {
+    "currentEditorMode": 0
+  }
+}
