@@ -1,0 +1,31 @@
+.ui.secondary.inverted.menu a.item.active:hover {
+	background: rgba(255, 255, 255, .2);
+}
+
+.form.section {
+	margin: 1.5em;
+}
+
+@media only screen and (min-width: 1350px) {
+	.ui.container {
+		width: 1277px;
+		margin-left: auto !important;
+		margin-right: auto !important;
+	}
+}
+
+.ui.form .inline.fields .field > input {
+	max-width: 100%;
+}
+
+.ui.footer p {
+	color: rgba(255, 255, 255, .5);
+}
+
+.footer.segment {
+	padding: 5em 0;
+}
+
+.ui.horizontal.divider.header {
+	line-height: 1.2em;
+}
