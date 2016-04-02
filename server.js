@@ -11,7 +11,7 @@ var util = require('util');
 fs.writeFile('server.pid', process.pid, (err) => {
 	if (err)
 		console.error('Error writing PID file!')
-})
+});
 
 /**
  * App Setup
@@ -25,7 +25,7 @@ app.ready
 			app.listen(config.port, config.interface, onListen);
 		else
 			app.listen(config.port, onListen);
-	})
+	});
 
 function onListen() {
 	debug(`${chalk.green(config.app.title)} listening on port ${chalk.green(config.port)} in ${chalk.green(process.env.NODE_ENV || 'development')} mode`);

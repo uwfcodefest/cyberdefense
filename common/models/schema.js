@@ -5,9 +5,8 @@
 /*eslint-env node browser*/
 'use strict';
 
-import q from 'q';
 import _ from 'lodash';
-import _validate from 'validate.js';
+import _validate from '../validate';
 
 export default class Schema {
 	constructor(data = {}) {
@@ -17,17 +16,16 @@ export default class Schema {
 	constraints = {};
 	blacklist = [];
 
-	validate(ops = {}) {
-		let err;
-
-		if (err = _validate(this.data, this.constraints, ops))
-			return q.reject(err);
-		else
-			return q.resolve(this.data);
+	static validate(data, ops) {
+		return _validate(data, this.constraints || Object.getPrototypeOf(this).constraints, ops)
 	}
 
-	static toJSON(data, blacklist) {
-		return _.omit(data, blacklist)
+	validate(ops = {}) {
+		return Object.getPrototypeOf(this).validate(this.data, ops)
+	}
+
+	static toJSON(data) {
+		return _.omit(data, this.blacklist)
 	}
 
 	toJSON() {

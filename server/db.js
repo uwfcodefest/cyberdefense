@@ -1,11 +1,13 @@
 /*eslint-env node*/
 'use strict';
 
+// TODO - If DB connection fails, we should retry again after a delay. Delay should 
+// back off exponentially, ideally. Retry could also be triggered by a signal, i.e. USR2
+// to allow host to notify web app when DB has been brought up
+
 import _ from 'lodash';
 import debug from 'debug';
 import q from 'q';
-import seraph from 'seraph';
-import seraphModel from 'seraph-model';
 import express from 'express';
 import request from 'request';
 
@@ -36,46 +38,67 @@ export default class DB {
 		dbg(`Connecting to DB: ${ops.uri}`);
 		return DB.ping(ops.uri)
 			.then(
-				() => dbg(`DB connection established!`) || DB._connection.resolve(seraph(ops.uri)),
-				() => dbg(`DB connection failed!`) || DB._connection.reject()
+				() => {
+					dbg(`DB connection established!`);
+					DB._connection.resolve(seraph(ops.uri));
+					return DB.connected;
+				},
+				(err) => {
+					dbg(`DB connection failed!`);
+					DB._connection.reject(wrap(err))
+					return DB.connected;
+				}
 			)
 	};
 	/**
 	 * Sends a request to the provided uri to probe if it is currently up. Returns a Promise that is resolved if a 200
 	 * response is received and rejected otherwise
-	 * @param uri
-	 * @returns {Promise}
 	 */
 	static ping = (uri) => {
 		return q.Promise((resolve, reject) => {
-			request(uri, (err, res, body) => {
+			request(uri, (err, res) => {
 				if (err || res.statusCode != 200)
 					return reject(err ? err.toString() : res.statusCode);
 				resolve()
 			})
 		})
 	};
-	static registerSchema = (schema, label) => {
-		q.Promise((resolve, reject) => {
-			DB.connected.then(db => {
-				dbg(`Registering new Schema: ${label}`);
 
-				// Create seraph model instance and attach to schema
-				let model = seraphModel(db, label);
-				schema.model = model;
-				schema.DB = DB;
-				model.type = schema.type;
-
-				DB.models.push({model, schema, label});
-
-				resolve(schema);
-			}, reject)
+	static checkBootstrap = () =>
+		DB.query('MATCH (n:TimeTreeRoot) RETURN count(n) AS count').then(res => {
+			if (res.count == 0)
+				return DB.bootstrap();
+			return q.reject();
 		});
 
-		return schema;
-	};
+	static bootstrap = () =>
+	dbg('Bootstrapping DB') ||
+	DB.query(createTimeTree).then(() => dbg('Created time tree'))
+		.then(() =>	DB.query(createVehicleDefnTree).then(() => dbg('Created vehicle definition tree')))
+		.then(() => dbg('Bootstrapping complete!'));
+
+	static query = (queryStr, params={}) =>
+		DB.connected.then(db =>
+			q.Promise((resolve, reject) => {
+				// dbg(`Running Query: ${queryStr}`);
+
+				db.query(queryStr, params, (err, results) => {
+					// dbg(`Got Response`);
+
+					if (err) {
+						dbg(`Query Error! ${err.toString()}`);
+						return reject(wrap(err));
+					}
+
+					resolve(results);
+				})
+			})
+		);
+	
 	static api = {
 		neo4j: function (schema) {
+			// TODO - this should be in it's own Module
+			// TODO - accept entity instead of schema?
 			this.schema = schema;
 
 			this.list = () =>
@@ -83,9 +106,9 @@ export default class DB {
 					.then(models => _.map(models, model => schema.toJSON(model, schema.blacklist)));
 
 			this.create = (data) =>
-				new schema(data).validate(schema.validationSettings.create)
+				schema.validate(data, schema.validationSettings.create)
 					.then(
-						() => q.ninvoke(schema.model, 'save', data),
+						(data) => q.ninvoke(schema.model, 'save', data),
 						err => q.reject(new ValidationError(err))
 					)
 					.then(model => schema.toJSON(model, schema.blacklist));
@@ -106,7 +129,7 @@ export default class DB {
 			this.destroyAll = () =>
 				q.Promise((resolve, reject) => {
 					DB.connected.then(db =>
-						db.queryRaw('MATCH (n) DETACH DELETE n', {}, err => {
+						db.queryRaw(`MATCH (n:${schema.type}) DETACH DELETE n`, {}, err => {
 							if (err)
 								return reject(err);
 							resolve();
@@ -149,7 +172,7 @@ export default class DB {
 			api.destroyAll()
 				.done(() => res.status(200).send(), err => next(wrap(err)))
 		}
-	};
+	}
 
 	static CRUDEndpoint(schema) {
 		let app = express.Router();
@@ -163,7 +186,7 @@ export default class DB {
 		app.put('/:id', ensureParamID(), crud.update);
 		app.delete('/:id', ensureParamID(), crud.destroy);
 
-		app.use((req, res, next) =>
+		app.use((req, res) =>
 			dbgCrud(`404`) || res.status(404).send()
 		);
 

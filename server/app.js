@@ -1,19 +1,23 @@
 /*eslint-env node*/
+// TODO - need to add proper logging support, i.e. add a logging lib and routes all logs through handlers
+
 var path = require('path'),
 	config = require('./config'),
 	express = require('express'),
-	q = require('q'),
 	bodyParser = require('body-parser'),
 	cookieParser = require('cookie-parser'),
 	http = require('http'),
-	_ = require('lodash'),
-	debug = require('debug')('app:init'),
+	pack = require('../package'),
+	debug = require('debug'),
+	dbgInit = debug('app:init'),
+	dbgErr = debug('app:error'),
+	dbgReq = debug('app:request'),
 	errors = require('./libs/errors');
 
 import DB from './db';
-import {readToken} from './libs/auth';
 
 module.exports = function () {
+	dbgInit('Creating new app');
 	var app = express();
 
 	// Get rid of express header
@@ -24,30 +28,27 @@ module.exports = function () {
 
 	app.db = DB;
 	app.use((req, res, next) => {
-		DB.connected.then(db => {
-			req.db = db;
-			next();
-		}, () => next())
+		req.db = DB;
+		next();
 	});
 
 	http.globalAgent.maxSockets = config.connectionPool;
 
-	app.get('/*', (req, res, next) => {
-		if (_.includes(req.get('Accept'), 'text/html'))
-			req.url = '/';
-		next();
-	});
-
 	// Serve app shell when root is requested
-	app.get('/', (req, res, next) => {
-		res.sendFile('/index.html', {root: config.dataDir}, err => {
+	app.get('/', (req, res) => {
+		res.header('X-Version', pack.version);
+		res.sendFile('/index.html', {root: config.assets}, err => {
 			if (err) {
 				console.log(err);
 				res.status(err.status).end();
 			}
 		});
 	});
+	app.use('/assets', express.static(path.resolve(config.assets)));
 	app.use('/assets', express.static(path.resolve(config.dataDir)));
+	app.get('/assets/favicon.png', (req, res) => {
+		res.sendStatus(404).end();
+	});
 
 	// Setup parsers
 	app.use(bodyParser.json());
@@ -57,37 +58,55 @@ module.exports = function () {
 	});
 
 	app.use(cookieParser());
-	app.use(readToken);
 
 	app.use(bodyParser.urlencoded({
 		extended: true
 	}));
-	
-	app.ready = DB.connect(config.db)
+
+	app.use((req, res, next) => {
+		dbgReq(`${req.ip}\t${req.method}\t${req.url}\t${req.xhr ? 'XHR' : ''}`);
+		next();
+	});
+
+	app.ready = require('./api.js')(app)
+		.then(() =>	dbgInit('API initialized!') || DB.connect(config.db))
+		// Wait for DB connection to come up
 		.then(
-			db => debug('DB initialized') || (app.db = db),
-			err => debug(err)
+			() => dbgInit('DB initialized!') ||
+			// Run DB bootstrap if this is a clean DB
+			DB.checkBootstrap()
+				.catch(err => {
+						if (err)
+							dbgErr('Bootstrap failed!') || dbgErr(err);
+					}
+				)
 		)
+		// Attach error handling
 		.then(
-			() => require('./api.js')(app),
-			err => debug(err)
-		)
-		.then(
-			() => {
-				debug('API initialized!');
-
-				// Send 404 for any requests that don't match API or static routes
-				app.use((req, res) => {
-					res.status(404).send('Not Found');
-				});
-
-				// Error handling
-				app.use(errors.catchAll);
-
-				debug('Application initialized!');
-			},
-			err => debug(err)
-		);
+			() => handleRequests(app),
+			err => dbgErr(err)
+		).then(() => dbgInit('Application initialized!'));
 
 	return app;
 };
+
+function handleRequests(app) {
+	app.get('/*', (req, res) => {
+		res.sendFile('/index.html', {root: config.assets}, err => {
+			if (err) {
+				dbgErr(err);
+				if (err.status)
+					return res.status(err.status).end();
+				res.sendStatus(500);
+			}
+		});
+	});
+
+	// Send 404 for any requests that don't match API or static routes
+	app.use((req, res) => {
+		res.status(404).send('Not Found');
+	});
+
+	// Error handling
+	app.use(errors.catchAll);
+}

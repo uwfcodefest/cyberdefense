@@ -2,16 +2,38 @@
 'use strict';
 
 import React from 'react';
-import Router from 'react-router';
-//import $ from 'jquery';
-//import semantic from 'semantic';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
+import semantic from 'semantic';
+import {match, browserHistory, Router} from 'react-router';
 
 import Routes from './routes';
-//import Backbone from './backbone';
 
-Router.run(Routes, Router.HistoryLocation, (Handler, state) => {
-	React.render(<Handler routerState={state}/>, document.querySelector('#app'));
-	//$('[data-title], [data-content]').popup();
-	//Backbone.nav.transition
-	//	.emitMsg('navTo', state);
+route();
+
+browserHistory.listen((loc) => {
+	// window.ga('send', 'pageview', loc.pathname);
 });
+
+function render(props) {
+	ReactDOM.render(<Router {...props}/>, document.querySelector('#app'));
+}
+
+function route() {
+	match({history: browserHistory, routes: Routes}, (err, redirectLocation, renderProps) => {
+		if (redirectLocation) {
+			console.log(`Redirecting to ${redirectLocation.pathname}`);
+			browserHistory.replace(redirectLocation);
+			route();
+		}
+		else if (err || !renderProps) {
+			console.log(`Route Not Found`);
+			browserHistory.push('/login');
+			route();
+		}
+		else {
+			render(renderProps);
+			$('[data-title], [data-content]').popup();
+		}
+	});
+}

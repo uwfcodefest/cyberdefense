@@ -3,9 +3,7 @@
 
 import React from 'react';
 import _ from 'lodash';
-//import $ from 'jquery';
 
-import Backbone from '../backbone';
 import {Link} from 'react-router';
 import MenuLink from '../components/menu/link';
 import ContentSegment from '../components/contentSegment';
@@ -16,30 +14,10 @@ export default class Home extends React.Component {
 	static linkIcon = 'home';
 
 	static defaultProps = {
-		onMenuClick: () => {},
+		onLinkClick: () => {},
 		links: []
 	};
 	
-	componentDidMount() {
-		//$.getJSON('/api/user').then(function (data) {
-		//	console.log(data);
-		//});
-		//$.ajax({
-		//	url: '/api/user',
-		//	type: 'POST',
-		//	data: JSON.stringify({
-		//		name: 'Ben'
-		//	}),
-		//	contentType: 'application/json'
-		//}).then(function (data) {
-		//	console.log('got response');
-		//	console.log(data);
-		//}, (err) => console.error(err));
-		//
-		//Backbone.api.user.read({id: 532})
-		//	.then(data => console.log(data))
-	}
-
 	render() {
 		return (
 			<div className="view home">
@@ -68,7 +46,7 @@ export default class Home extends React.Component {
 							CyberDefense
 						</h1>
 						<h2 className="ui inverted header">cyberdefense</h2>
-						<Link to='/' className="ui huge primary button">Get Started <i className="exclamation icon"/></Link>
+						<Link to='/' className="ui huge primary button">Get Started <i className="arrow right icon"/></Link>
 					</div>
 
 				</div>

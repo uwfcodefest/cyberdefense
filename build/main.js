@@ -16,9 +16,6 @@ var app = require('./app');
 var vendor = require('./vendor');
 
 gulp.task('deploy', deploy);
-gulp.task('buildImage', buildImage);
-gulp.task('transfer', transfer);
-gulp.task('launch', launch);
 gulp.task('hashPassword', hashPassword);
 
 gulp.task('clean', clean);
@@ -82,45 +79,8 @@ function deploy(cb) {
 		})
 }
 
-function buildImage(cb) {
-	console.log(chalk.green('Building version', pack.version));
-	spawn('./build/build.sh', [pack.namespace, pack.version], {
-		stdio: 'inherit'
-	})
-		.on('error', function (err) {
-			console.error(err);
-			cb(err);
-		})
-		.on('exit', function () {
-			console.log(chalk.green('Build successful!'));
-			cb();
-		})
-}
-
-function transfer(cb) {
-	spawn('./build/transfer.sh', [pack.namespace, `${pack.namespace}/web:${argv.latest ? 'latest' : pack.version}`], {
-		stdio: 'inherit'
-	})
-		.on('error', function (err) {
-			console.error(err);
-			cb(err);
-		})
-		.on('exit', cb)
-}
-
-function launch(cb) {
-	spawn('./build/launch.sh', [pack.namespace, `${pack.namespace}/web:${argv.version ? argv.version : 'latest'}`, `${pack.namespace}_web`, pack.dockerArgs], {
-		stdio: 'inherit'
-	})
-		.on('error', function (err) {
-			console.error(err);
-			cb(err);
-		})
-		.on('exit', cb)
-}
-
 function hashPassword(cb) {
-	var bcrypt = require('bcrypt');
+	var bcrypt = require('bcryptjs');
 	
 	const pass = argv.pass;
 	
