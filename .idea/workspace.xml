@@ -2,25 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a96fe0f-f1aa-487b-9fdf-79ec55e530c3" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/deployment.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap-theme.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap-theme.min.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/bootstrap.min.css" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/body-bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/download-button.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/github-button.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/header-bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/highlight-bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/sidebar-bg.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascripts/main.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javascripts/scale.fix.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/params.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stylesheets/github-light.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stylesheets/normalize.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stylesheets/print.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stylesheets/styles.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/stylesheets/stylesheet.css" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
     </list>
     <ignored path="CyberDefense - Github Website.iws" />
@@ -35,26 +16,6 @@
   <component name="ChangesViewManager" flattened_view="true" show_ignored="false" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
-  </component>
-  <component name="DockManager">
-    <window id="1">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/index.html">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="171">
-                    <caret line="75" column="48" selection-start-line="75" selection-start-column="48" selection-end-line="75" selection-end-column="48" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -81,8 +42,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/css/freelancer.css" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/styles.css" />
+        <option value="$PROJECT_DIR$/index.html" />
       </list>
     </option>
   </component>
@@ -232,16 +193,16 @@
       <option name="presentableId" value="Default" />
       <updated>1459576661473</updated>
       <workItem from="1459578607619" duration="1882000" />
-      <workItem from="1459586191595" duration="4289000" />
+      <workItem from="1459586191595" duration="4718000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6171000" />
+    <option name="totallyTimeSpent" value="6600000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -297,8 +258,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="75" column="48" selection-start-line="75" selection-start-column="48" selection-end-line="75" selection-end-column="48" />
+        <state relative-caret-position="391">
+          <caret line="110" column="28" selection-start-line="110" selection-start-column="28" selection-end-line="110" selection-end-column="28" />
           <folding />
         </state>
       </provider>
