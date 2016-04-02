@@ -5,7 +5,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "webapp/template-pixijs-portrait-webapp/sample.zip",
       "projectGuid": "dfa4f37e-97e0-456f-9576-de811725dbe4",
-      "lastModifiedDate": 1459566108874,
+      "lastModifiedDate": 1459578401563,
       "creationDate": 1459565755949
     },
     "sourceDirectory": "www",
@@ -235,25 +235,75 @@
           "android-signed": true
         },
         "isActive_": true,
-        "appName_": "CyberDefense",
+        "appName_": "Cyber Defense",
         "appID_": "xdk.intel.blank.pixijs.game.template",
         "appAccess_": {
-          "mode": "legacy",
-          "network": [],
+          "mode": "whitelist",
+          "network": [
+            "*"
+          ],
           "intents": [],
-          "navigation": []
+          "navigation": [],
+          "properties": {}
         },
-        "icons_": [],
-        "splashes_": [],
+        "icons_": [
+          {
+            "relPath": "asset/android/icons/LDPI.png",
+            "density": "ldpi",
+            "height": 36,
+            "width": 36
+          },
+          {
+            "relPath": "asset/android/icons/MDPI.png",
+            "density": "mdpi",
+            "height": 48,
+            "width": 48
+          },
+          {
+            "relPath": "asset/android/icons/HDPI.png",
+            "density": "hdpi",
+            "height": 72,
+            "width": 72
+          },
+          {
+            "relPath": "asset/android/icons/XHDPI.png",
+            "density": "xhdpi",
+            "height": 96,
+            "width": 96
+          }
+        ],
+        "splashes_": [
+          {
+            "relPath": "asset/android/splash/SS LDPI.png",
+            "density": "ldpi",
+            "height": 426,
+            "width": 320,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "asset/android/splash/SS MDPI.png",
+            "density": "mdpi",
+            "height": 470,
+            "width": 320,
+            "orientation": "portrait"
+          },
+          {
+            "relPath": "asset/android/splash/SS XHDPI.png",
+            "density": "xhdpi",
+            "height": 960,
+            "width": 720,
+            "orientation": "portrait"
+          }
+        ],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
+        "certificateId_": "1_IGYQOuEUC10YG6yoTiNA2",
         "iosProvs_": [],
         "cordovaCLIVersion_": "5.4.1",
         "crosswalkVersion_": "16",
-        "appVersion_": "0.0.1",
+        "appVersion_": "1.0",
         "appDescription_": "Use this template to start creating Pixi.js based mobile game web apps.",
-        "appAuthor_": "Intel XDK",
+        "appAuthor_": "Ryan McAfee, Dan Hillman, Ben Avellone",
         "appVersionCode_": "1"
       }
     },
