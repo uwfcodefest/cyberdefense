@@ -25,13 +25,30 @@
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
     <![endif]-->
+
+    <!--Load the Attack Map-->
+    <link href="css/attack.map.css" rel="stylesheet" />
+    <script src="js/d3.v3.min.js"></script>
+    <script src="js/d3.geo.projection.v0.min.js"></script>
+    <script src="js/topojson.v1.min.js"></script>
+    <script src="js/datamaps.world.min.js?"></script>
+    <script src="js/jquery-2.2.2.min.js"></script>
+    <script src="js/jquery.simplemodal-1.4.4.js"></script>
+    <script src="js/custom.map.js"></script>
 
 </head>
 
 <body id="page-top" class="index">
+
+    <audio id="starwars" src="audio/Blaster-Solo.wav" preload="auto"></audio>
+    <audio id="tng" src="audio/tng_torpedo_clean.mp3" preload="auto"></audio>
+    <audio id="b5" src="audio/B5-interceptor1.wav" preload="auto"></audio>
+    <audio id="wargames" src="audio/WarGames-KeyPress.wav" preload="auto"></audio>
+    <audio id="pew" src="audio/pew.mp3" preload="auto"></audio>
+    <audio id="galaga" src="audio/shot_sound.mp3" preload="auto"></audio>
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -71,7 +88,8 @@
         <div id="photo" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="img/header.jpg" alt="" class="img-responsive">
+                    <div id="networkmap"></div>
+                    <div id="attackdiv"></div>
                     <div class="carousel-caption">
                         <div class="intro-text">
                             <span class="name">Cyber Defense</span>
