@@ -13,7 +13,16 @@
     "dev:dbg": "NODE_ENV=development DEBUG=app:* gulp watch",
     "deploy": "NODE_ENV=production gulp build && gulp deploy",
     "test": "NODE_ENV=testing gulp test",
-    "test:dbg": "NODE_ENV=testing DEBUG=app:*,test:* gulp test"
+    "test:dbg": "NODE_ENV=testing DEBUG=app:*,test:* gulp test",
+    "start:win": "set NODE_ENV=production&&node server.js",
+    "build:win": "set NODE_ENV=production&&gulp build",
+    "build:dev:win": "set NODE_ENV=development&&gulp build",
+    "dev:win": "set NODE_ENV=development&&gulp watch",
+    "prod:win": "set NODE_ENV=production&&gulp watch",
+    "dev:dbg:win": "set NODE_ENV=development&&set DEBUG=app:*&&gulp watch",
+    "deploy:win": "set NODE_ENV=production&&gulp build&&gulp deploy",
+    "test:win": "set NODE_ENV=testing&&gulp test",
+    "test:dbg:win": "set NODE_ENV=testing&&DEBUG=app:*,test:*&&gulp test"
   },
   "dependencies": {
     "async": "^0.9.2",
