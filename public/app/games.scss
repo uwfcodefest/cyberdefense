@@ -86,14 +86,6 @@
 .game-footer {
 	margin-top:4em;
 	
-	.ui.submit.button {
-		background-color: $blue;
-		&:hover {
-			background-color: lighten($blue, 10%)
-		}
-		color: white;
-	}
-	
 	.buttons {
 		margin-top: 2em;
 		text-align: left;
@@ -102,4 +94,8 @@
 
 .ui.statistics {
 	margin: 1em -1.5em -2em !important;
+}
+
+.ui.modal .actions {
+	border-top: none;
 }

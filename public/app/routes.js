@@ -20,10 +20,10 @@ const Routes = (
 		<IndexRoute component={MainMenu}/>
 		<Route component={CreateCompany} path='/company'/>
 		<Route component={Introduction} path='/introduction'/>
-		<Route component={MissionControl} path='/missioncontrol'/>
 		<Route component={HighScores} path='/highscores'/>
 		<Route component={GameWrapper} path='/game'>
 			<Route component={BinaryGame} path='/game/binary'/>
+			<Route component={MissionControl} path='/game/missioncontrol'/>
 		</Route>
 	</Route>
 );

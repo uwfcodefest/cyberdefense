@@ -30,7 +30,8 @@ export default class BinaryGame extends React.Component {
 		playerData: React.PropTypes.object.isRequired,
 		level: React.PropTypes.number.isRequired,
 		difficulty: React.PropTypes.number.isRequired,
-		app: React.PropTypes.object.isRequired
+		app: React.PropTypes.object.isRequired,
+		router:React.PropTypes.object.isRequired
 	};
 	
 	state = {
@@ -39,14 +40,33 @@ export default class BinaryGame extends React.Component {
 		bonusScore: 0,
 		tries: 0
 	};
+
+	routerWillLeave = (e) => {
+		return e.action == 'PUSH'
+	};
 	
 	componentWillMount() {
-		this.props.timer.set(60);
+		this.props.timer.set(20 * this.context.difficulty -  5 * (this.context.difficulty - 1));
+
+		this.context.router.setRouteLeaveHook(
+			this.props.route,
+			this.routerWillLeave
+		);
 
 		this.setState({
 			puzzleData: this.getPuzzleData(this.context.difficulty, this.context.level),
 			helperData: this.getHelperData(this.context.difficulty)
 		})
+	}
+	
+	componentDidMount() {
+		$('.ui.page.modals').remove();
+
+		$('.ui.help.modal')
+			.modal('attach events', '.help.button', 'show');
+
+		$('.ui.info.modal')
+			.modal('attach events', '.info.button', 'show');
 	}
 	
 	componentWillReceiveProps(nextProps, nextContext) {
@@ -57,6 +77,7 @@ export default class BinaryGame extends React.Component {
 				helperData: this.getHelperData(nextContext.difficulty),
 				answers: {}
 			});
+			this.resetAnswers();
 		}
 	}
 	
@@ -65,8 +86,16 @@ export default class BinaryGame extends React.Component {
 			const data = _.map(_.range(this.getNumPuzzleColumns(difficulty)), () =>
 				(Math.random() > 0.5 ? 1 : 0)
 			);
+
+			let answer = this.toBase10(data, difficulty);
+			
+			if (answer === 0) {
+				data[data.length - 1] = 1;
+				answer = 1;
+			}
+			
 			return {
-				answer: this.toBase10(data, difficulty),
+				answer,
 				data
 			}
 		});
@@ -126,7 +155,7 @@ export default class BinaryGame extends React.Component {
 						closable  : false,
 						onApprove : () => {
 							this.context.app.addScore(this.earnedScore);
-							this.resetAnswers();
+							this.context.router.push('/game/missioncontrol')
 						}
 					})
 					.modal('show')
@@ -173,7 +202,7 @@ export default class BinaryGame extends React.Component {
 	render() {
 		return (
 			<div className="encryption game">
-				<GameHeader text='Binary'/>
+				<GameHeader text='Phase I: Binary'/>
 				<GameBody>
 					<div className="ui binary equal width celled grid">
 						
@@ -209,31 +238,31 @@ export default class BinaryGame extends React.Component {
 					<div className="ui content divided grid">
 						<div className="row">
 							<div className="ui eight wide column">Difficulty Bonus</div>
-							<div className="ui four wide column">+{this.difficultyScore}</div>
+							<div className="ui eight wide column">+{this.difficultyScore}</div>
 						</div>
 						<div className="row">
 							<div className="ui eight wide column">Level Bonus</div>
-							<div className="ui four wide column">+{this.levelScore}</div>
+							<div className="ui eight wide column">+{this.levelScore}</div>
 						</div>
 						<div className="row">
 							<div className="ui eight wide column">Time Bonus</div>
-							<div className="ui four wide column">+{this.state.bonusScore}</div>
+							<div className="ui eight wide column">+{this.state.bonusScore}</div>
 						</div>
 						<div className="ui divider"></div>
 						<div className="row">
-							<div className="ui eight wide column">Points Earned</div>
-							<div className="ui four wide column">+{this.earnedScore}</div>
+							<div className="ui eight wide column">Score Earned</div>
+							<div className="ui eight wide column">+{this.earnedScore}</div>
 						</div>
 						<div className="ui divider"></div>
 						<div className="row">
-							<div className="ui eight wide column">Total Points</div>
-							<div className="ui four wide column">{this.context.playerData.score} + {this.earnedScore} = {this.newTotalScore}</div>
+							<div className="ui eight wide column">Total Score</div>
+							<div className="ui eight wide column">{this.context.playerData.score} + {this.earnedScore} = {this.newTotalScore}</div>
 						</div>
-						<div className={classnames('ui grid', {hide: this.earnedHugeScore})}>
-							<div className="ui divider"></div>
+						<div className={classnames('ui divider', {hide: !this.earnedHugeScore})}></div>
+						<div className={classnames('ui grid', {hide: !this.earnedHugeScore})}>
 							<div className="row">
 								<div className="ui eight wide column">Achievements</div>
-								<div className="ui four wide column">Earned Huge Score!</div>
+								<div className="ui eight wide column">Earned Huge Score!</div>
 							</div>
 						</div>
 					</div>
@@ -249,6 +278,44 @@ export default class BinaryGame extends React.Component {
 					<div className="actions">
 						<div className={classnames("ui huge cancel button", {hide: this.context.difficulty > 1 && this.state.tries < 3})}>Lower difficulty and try again</div>
 						<div className="ui huge positive button">Try again</div>
+					</div>
+				</div>
+
+				<div className="ui basic blurring modal info">
+					<h1 className="ui header">
+						Phase I: Binary Info
+					</h1>
+					<div className="content">
+						<p>*What is Binary*
+
+							Binary is a base 2 number system invented by Gottfried Leibniz where numeric values are represented by
+							different combinations of 0 and 1, also known as OFF or ON. The primary language of
+							computers, binary is still used in today's machines because it's a simple and elegant
+							design. Binary's 0 and 1 method is efficient at detecting an electrical signal's off or
+							on state, or magnetic poles in media like hard drives. It is also the most efficient way
+							to control logic circuits.</p>
+					</div>
+					<div className="actions">
+						<div className="ui huge positive button">Thanks!</div>
+					</div>
+				</div>
+
+				<div className="ui basic blurring modal help">
+					<h1 className="ui header">
+						Phase I: Binary Help
+					</h1>
+					<div className="content">
+						<p>*What is Binary*
+
+							Binary is a base 2 number system invented by Gottfried Leibniz where numeric values are represented by 
+							different combinations of 0 and 1, also known as OFF or ON. The primary language of 
+							computers, binary is still used in today's machines because it's a simple and elegant 
+							design. Binary's 0 and 1 method is efficient at detecting an electrical signal's off or 
+							on state, or magnetic poles in media like hard drives. It is also the most efficient way 
+							to control logic circuits.</p>
+					</div>
+					<div className="actions">
+						<div className="ui huge positive button">Thanks!</div>
 					</div>
 				</div>
 			</div>

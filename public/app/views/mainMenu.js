@@ -4,8 +4,6 @@
 import React from 'react';
 import _ from 'lodash';
 
-import classnames from 'classnames';
-
 import {Link} from 'react-router';
 
 export default class MainMenu extends React.Component {
@@ -20,8 +18,8 @@ export default class MainMenu extends React.Component {
 							CyberDefense
 						</h1>
 						<div className="ui button-container">
-							<Link to='/company' className="ui huge fluid primary button">New Game </Link>
-							<a className="ui huge fluid primary button">About</a>
+							<Link to='/introduction' className="ui huge fluid primary button">New Game </Link>
+							<a href='http://uwfcodefest.com' target='_blank' className="ui huge fluid primary button">About</a>
 						</div>
 					</div>
 

@@ -18,7 +18,8 @@ export default class GameWrapper extends React.Component {
 		playerData: React.PropTypes.object.isRequired,
 		level: React.PropTypes.number.isRequired,
 		difficulty: React.PropTypes.number.isRequired,
-		app: React.PropTypes.object.isRequired
+		app: React.PropTypes.object.isRequired,
+		router: React.PropTypes.object.isRequired
 	};
 
 	onDifficultyChange = (val) => {
@@ -80,6 +81,10 @@ export default class GameWrapper extends React.Component {
 			'Hard'
 		][this.context.difficulty - 1]
 	}
+	
+	get onMissionControlPage() {
+		return this.props.location.pathname == 'game/missioncontrol'
+	}
 
 	render() {
 		const children = React.Children.map(
@@ -121,18 +126,18 @@ export default class GameWrapper extends React.Component {
 							<div className="label">Current Score</div>
 							<div className="value">{this.context.playerData.score || '0'}</div>
 						</div>
-
-						<div className="ui statistic timer">
+						
+						<div className={classnames('ui statistic timer', {hide: this.onMissionControlPage})}>
 							<div className="label">Bonus Score Remaining</div>
 							<div className="value">{this.state.timer.val}</div>
 						</div>
 
-						<div className="ui statistic level">
+						<div className={classnames('ui statistic level', {hide: this.onMissionControlPage})}>
 							<div className="label">Level</div>
 							<div className="value">{this.context.level}</div>
 						</div>
 
-						<div className="ui statistic difficulty">
+						<div className={classnames('ui statistic difficulty', {hide: this.onMissionControlPage})}>
 							<div className="label">Difficulty</div>
 							<div className="text value">{this.difficulty}</div>
 						</div>

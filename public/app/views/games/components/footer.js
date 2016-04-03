@@ -13,15 +13,17 @@ export default class GameFooter extends React.Component {
 	render() {
 		return (
 			<div className="game-footer">
-				<button className="ui huge fluid submit button" onClick={this.props.onSubmit}>Submit</button>
+				<button className="ui huge fluid green button" onClick={this.props.onSubmit}>Submit</button>
 				
 				<div className='buttons'>
-					<button className="ui huge icon button">
-						<i className="info icon"/>
+					<button className="ui huge labeled icon primary help button">
+						<i className="question icon"/>
+						Game Help
 					</button>
 
-					<button className="ui huge icon button">
-						<i className="question icon"/>
+					<button className="ui huge labeled icon primary info button">
+						<i className="info icon"/>
+						Topic Info
 					</button>
 				</div>
 				

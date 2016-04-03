@@ -14,7 +14,7 @@ export default class Introduction extends React.Component {
 					<h1>Introduction</h1>
 				</div>
 
-				<Link to='/missioncontrol' className='ui huge primary button'>
+				<Link to='/game/missioncontrol' className='ui huge primary button'>
 					Let's Get Started!
 					<i className="right arrow icon"/>
 				</Link>
