@@ -84,10 +84,10 @@ header {
     color: #fff;
 }
 
-header .container {
-    padding-top: 100px;
-    padding-bottom: 50px;
-}
+/*header .container {*/
+    /*padding-top: 100px;*/
+    /*padding-bottom: 50px;*/
+/*}*/
 
 header .container-photo {
     padding-top: 100px;
@@ -154,7 +154,7 @@ header .intro-text .skills {
     }
 
     .navbar-fixed-top.navbar-shrink {
-        padding: 10px 0;
+        /*padding: 10px 0;*/
     }
 
     .navbar-fixed-top.navbar-shrink .navbar-brand {
@@ -183,29 +183,6 @@ header .intro-text .skills {
 .navbar-default,
 .navbar-inverse {
     border: 0;
-}
-
-section {
-    padding: 100px 0;
-}
-
-section h2 {
-    margin: 0;
-    font-size: 3em;
-}
-
-section.success {
-    color: #fff;
-    background: #2295bc;
-}
-
-section.success a,
-section.success a:hover,
-section.success a:focus,
-section.success a:active,
-section.success a.active {
-    outline: 0;
-    color: #2c3e50;
 }
 
 @media(max-width:767px) {
@@ -473,11 +450,6 @@ footer .footer-below {
     opacity: 0;
 }
 
-.btn-success {
-    background-color: #2295bc;
-    border-color: #2295bc;
-}
-
 a {
     color: #2295bc;
 }
@@ -488,7 +460,92 @@ a {
     width: 100%;
 }
 
-.carousel-caption {
 
-    bottom: 200px;
+section {
+    color: black !important;
+    padding: 100px 0;
+}
+
+
+section h2 {
+    margin: 0;
+    font-size: 3em;
+}
+
+section.primary {
+    background-color: #2295bc;
+ }
+
+section.first {
+    padding: 0 0 0 0;
+}
+
+section.alternate {
+ background-color: #fff;
+}
+
+.carousel-caption {
+    bottom: 12em;
+}
+
+.custom-list li {
+    font-size: 22px;
+}
+
+#sourcecode .btn {
+    margin-bottom: 1em;
+}
+
+#contact label, .form-control {
+    color: black;
+}
+
+.form-control::-webkit-input-placeholder {
+    color: #999999;
+}
+
+.help-block {
+    color: black;
+}
+
+.form-control::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    black;
+}
+.form-control:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    black;
+    opacity:  1;
+}
+.form-control::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    black;
+    opacity:  1;
+}
+.form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    black;
+}
+
+#contact .form-group textarea {
+    outline: white;
+    border: 1px solid white;
+    padding: 10px;
+}
+
+section h2 {
+    margin-bottom: 1em;
+}
+
+.margin-top {
+    margin-top: 2em;
+}
+
+#contact .form-control {
+    background-color: white;
+    padding: 20px;
+}
+
+.navbar-default .navbar-brand {
+    color: black;
+}
+
+.navbar-default .navbar-nav>li>a, .navbar-default .navbar-nav>li  {
+    color: black;
 }

@@ -387,5 +387,5 @@ $().ready(function () {
 
 
     // lazy-dude's responsive window
-    d3.select(window).on('resize', function() { location.reload(); });
+    //d3.select(window).on('resize', function() { location.reload(); });
 });
