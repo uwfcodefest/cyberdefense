@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" autoUpload="Always" serverName="cyberdefense.uwfcodefest.com">
+  <component name="PublishConfigData" autoUpload="Always" serverName="cyberdefense.uwfcodefest.com" uploadOnCheckin="07ee1fb5-ba02-48e9-98e4-7e0f9d699ed6">
     <serverData>
       <paths name="Local">
         <serverdata>
@@ -17,6 +17,7 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="cyberdefense.uwfcodefest.com" />
     <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

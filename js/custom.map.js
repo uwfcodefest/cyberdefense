@@ -171,8 +171,7 @@ $().ready(function () {
             borderWidth: 0.85,
             borderColor: '#4393c3',
             popupTemplate: function(geography, data) {
-                return '<div class="hoverinfo" style="color:white;background:black">' +
-                    geography.properties.name + '</div>';
+                return '<div class="hoverinfo" style="color:white;background:black">' + geography.properties.name + '</div>';
             },
             popupOnHover: true,
             highlightOnHover: false,
@@ -249,14 +248,6 @@ $().ready(function () {
                 if (dst > slatlong.length-1) { dst = src - 1 }
             }
 
-            if (typeof allfx !== 'undefined') {
-                snd_id = audio_type[Math.floor((Math.random() * audio_type.length))];
-            }
-            // no guarantee of sound playing w/o the load - stupid browsers
-            if (typeof nofx === 'undefined' && (should_play_audio === true)) {
-                document.getElementById(snd_id).load();
-                document.getElementById(snd_id).play();
-            }
 
             // add hit to the arc queue
             // use strokeColor to set arc line color
@@ -362,13 +353,11 @@ $().ready(function () {
                 dstlong = in_lon;
             }
 
-            hits.push( { origin : { latitude: +srclat, longitude: +srclong },
-                destination : { latitude: +dstlat, longitude: +dstlong } } );
+            hits.push( { origin : { latitude: +srclat, longitude: +srclong }, destination : { latitude: +dstlat, longitude: +dstlong } } );
             map.arc(hits, {strokeWidth: 2, strokeColor: strokeColor});
 
             // add boom to the bubbles queue
-            boom.push( { radius: 7, latitude: +dstlat, longitude: +dstlong,
-                fillOpacity: 0.5, attk: which_attack} );
+            boom.push( { radius: 7, latitude: +dstlat, longitude: +dstlong, fillOpacity: 0.5, attk: which_attack} );
             map.bubbles(boom, {
                 popupTemplate: function(geo, data) {
                     return '<div class="hoverinfo">' + data.attk + '</div>';
@@ -391,7 +380,12 @@ $().ready(function () {
     };
 
 
+    setInterval(function () {
+        $('#attackdiv').html("");
+        console.log("Test");
+    }, 300000);
+
 
     // lazy-dude's responsive window
-    //d3.select(window).on('resize', function() { location.reload(); });
+    d3.select(window).on('resize', function() { location.reload(); });
 });
