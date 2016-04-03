@@ -11,9 +11,9 @@ export default class Introduction extends React.Component {
 		return (
 			<div className="introduction view ui container">
 				<div className="ui segment">
-					<h1>Introduction</h1>
+					<h1 className='ui header'>Introduction</h1>
 
-					<h2>Hello there and welcome to the accelerated training program at CyberDefense!</h2>
+					<h2 className='ui header'>Hello there and welcome to the accelerated training program at CyberDefense!</h2>
 
 					<p>You couldn't have logged in at a better time, recently one of our field engineers has noticed some suspicious behavior on our backend servers and have promptly notified CyberDefense's NOC (Network Operation Center) of the incident.</p>
 
@@ -25,36 +25,35 @@ export default class Introduction extends React.Component {
 						Jenna Fischer - HR Manager
 					</p>
 
-					<h1>Systems Overview - How to use the CyberDefense System</h1>
+					<h1 className='ui header'>Systems Overview - How to use the CyberDefense System</h1>
 
-						<h2>Mission Control System</h2>
+						<h2 className='ui header'>Mission Control System</h2>
 
-						<h3>First Things, First</h3>
+						<h3 className='ui header'>First Things, First</h3>
 						<p>
 							Internally, you may hear the Mission Control System referred to by "the Situation Room" in internal company chat channels. (You'll be getting access tomorrow to our internal slack channels as part of our new hire onboarding procedure.)
 							This is an internal code name for the Mission Control System that is used by some of our staff better acquainted with our systems.
 						</p>
 
-						<h3>Mission Selector</h3>
+						<h3 className='ui header'>Mission Selector</h3>
 						<p>
 							The Mission Selector interface will be in the center of the Mission Control System and will be where you will select which mission to work on.
 							Currently, you only have one mission currently assigned and unlocked to you. You'll have more missions unlocked after you successfully complete your first mission, however it may take you several attempts because you will need to
 							receive a perfect score before proceeding. We want to ensure you have the necessary skill and attention to detail we need on the job and always remember the best defense can only be played by knowing how to play a solid offense.
 						</p>
 
-						<h3>Notifications and Communications Channel</h3>
+						<h3 className='ui header'>Notifications and Communications Channel</h3>
 						<p>
 							On the next page, you will be directed to the Mission Control Dashboard, it will be here that you will receive communication and mission critical, time sensitive updates from CyberDefense.
 							These updates will be display on the bottom of the screen.
-							<b>Please be sure to log in frequently to check these updates. Our business depends on it.</b>
+							<b> Please be sure to log in frequently to check these updates. Our business depends on it.</b>
 						</p>
 
-						<h3>Here is your first mission - Mission 1: Phase 1</h3>
+						<h3 className='ui header'>Here is your first mission - Mission 1: Phase 1</h3>
 						<p>You will be reviewing binary to help you understand some of the advanced intrusion signatures we have been seeing recently on our firewalls. The signatures have even our brightest engineers baffled.</p>
 
-						<h4>Are you up for the challenge?</h4>
 
-						<h3>Let's do this!</h3>
+						<h3 className='ui header'>Are you up for the challenge? Let's do this!</h3>
 
 				</div>
 
