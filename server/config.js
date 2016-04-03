@@ -3,8 +3,8 @@ import _ from 'lodash';
 
 var all = {
 		app: {
-			title: 'HPA_Intranet',
-			namespace: 'hpa-inet'
+			title: 'CyberDefense',
+			namespace: 'cyberdefense'
 		},
 		interface: '127.0.0.1',
 		port: process.env.PORT || 80,

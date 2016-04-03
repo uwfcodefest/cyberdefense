@@ -5,7 +5,11 @@ import React from 'react';
 import {Route, IndexRoute} from 'react-router'
 
 import App from './views/app';
-import Home from './views/home';
+import MainMenu from './views/mainMenu';
+import CreateCompany from './views/company';
+import Introduction from './views/introduction';
+import MissionControl from './views/missionControl';
+import HighScores from './views/highscores';
 
 import GameWrapper from './components/gameWrapper';
 import BinaryGame from './views/games/binary';
@@ -13,7 +17,11 @@ import BinaryGame from './views/games/binary';
 
 const Routes = (
 	<Route component={App} path='/'>
-		<IndexRoute component={Home}/>
+		<IndexRoute component={MainMenu}/>
+		<Route component={CreateCompany} path='/company'/>
+		<Route component={Introduction} path='/introduction'/>
+		<Route component={MissionControl} path='/missioncontrol'/>
+		<Route component={HighScores} path='/highscores'/>
 		<Route component={GameWrapper} path='/game'>
 			<Route component={BinaryGame} path='/game/binary'/>
 		</Route>

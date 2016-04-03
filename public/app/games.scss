@@ -50,7 +50,7 @@
 					}
 					
 					&.answer {
-						border-bottom: 2px solid black;
+						border-bottom: 1px solid black;
 						
 						input {
 							color: $blue;
@@ -99,4 +99,7 @@
 		text-align: left;
 	}
 }
-	
+
+.ui.statistics {
+	margin: 1em -1.5em -2em !important;
+}

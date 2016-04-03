@@ -49,12 +49,10 @@ export default class App extends React.Component {
 	}
 
 	setDifficulty = (val) => {
-		console.log(val, 'diff');
 		this.setState({difficulty: Number(val)});
 	};
 
 	setLevel = (val) => {
-		console.log(val, 'level');
 		this.setState({level: Number(val)});
 	};
 

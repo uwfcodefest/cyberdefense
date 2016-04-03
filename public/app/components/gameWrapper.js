@@ -95,7 +95,7 @@ export default class GameWrapper extends React.Component {
 		return (
 			<div className='game-container'>
 				<div className="ui game-wrapper container">
-					<div className={classnames('options-container', {hide: this.context.freePlayMode})}>
+					<div className={classnames('options-container', {hide: !this.context.freePlayMode})}>
 						<div className="ui huge primary difficulty dropdown button">
 							<span className="text">Difficulty</span>
 							<div className="menu">

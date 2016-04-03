@@ -58,7 +58,7 @@ body {
 
 .view {
 	padding: 0;
-	&.menu {
+	&.main-menu {
 		flex: 1;
 		min-height: 100vh;
 
@@ -70,6 +70,8 @@ body {
 
 			.text.container {
 				margin-top: -5em;
+				min-width: 400px;
+				max-width: 80%;
 			}
 
 			.button-container{
@@ -79,6 +81,20 @@ body {
 					&:first-child {
 						margin-top:0;
 					}
+				}
+			}
+		}
+	}
+	
+	&.mission-control {
+		.ui.card {
+			.content {
+				text-align: center;
+			}
+			
+			&.locked {
+				.header {
+					color: $gray-ww;
 				}
 			}
 		}
@@ -126,6 +142,12 @@ body {
 
 .hide {
 	display: none !important;
+}
+
+.ui.segment {
+	background: none;
+	border: none;
+	box-shadow: none;
 }
 
 @import "overrides";
