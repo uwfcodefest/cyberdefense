@@ -120,13 +120,12 @@ body {
 		
 		.ui.divider {
 			border-bottom: 1px solid rgba(255,255,255,.75);
-			
-			&.fat {
-				border-bottom: 1px solid rgba(255,255,255,.75);
-			}
 		}
 	}
 }
 
+.hide {
+	display: none !important;
+}
 
 @import "overrides";

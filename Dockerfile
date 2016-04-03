@@ -3,12 +3,6 @@ FROM mhart/alpine-node
 RUN mkdir /data
 WORKDIR /app
 
-# Need python to build bcrypt (node-gyp)
-RUN apk add --no-cache \
-    python \
-    gcc \
-    build-base
-
 # Env vars
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV NODE_ENV production

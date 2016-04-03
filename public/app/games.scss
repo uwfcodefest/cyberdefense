@@ -3,12 +3,20 @@
 
 .game-container {
 	margin: 2em 0;
+	
+	.ui.statistics {
+		.text.value {
+			//font-size: 3em;
+		}
+	}
 }
 
 .game {
 	text-align: center;
 	.header-container {
-		
+		.ui.header {
+			font-size: 4em;
+		}
 	}
 	
 	&.encryption {
@@ -33,7 +41,7 @@
 				box-shadow: none;
 				
 				.column {
-					border: 1px solid $red;
+					border: 1px solid black;
 					border-top: none;
 					
 					&:last-child {
@@ -42,8 +50,13 @@
 					}
 					
 					&.answer {
-						color: $blue;
 						border-bottom: 2px solid black;
+						
+						input {
+							color: $blue;
+							background-color: #ddd !important;
+							text-align: center;
+						}
 						
 						&.correct {
 							background-color: #73c674;
@@ -58,7 +71,7 @@
 					.column {
 						box-shadow: none;
 						border: none;
-						border-bottom: 1px solid $red;
+						border-bottom: 1px solid black;
 
 						&:last-child {
 							border: none;

@@ -4,22 +4,59 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-
+import classnames from 'classnames';
 
 export default class GameWrapper extends React.Component {
-	static defaultProps = {};
-	
 	state = {
-		difficulty: 1,
-		level: 1
+		timer: {
+			val: 0,
+			intervalID: null
+		}
 	};
-	
+
+	static contextTypes = {
+		playerData: React.PropTypes.object.isRequired,
+		level: React.PropTypes.number.isRequired,
+		difficulty: React.PropTypes.number.isRequired,
+		app: React.PropTypes.object.isRequired
+	};
+
 	onDifficultyChange = (val) => {
-		this.setState({difficulty: Number(val)});
+		this.context.app.setDifficulty(Number(val));
 	};
 
 	onLevelChange = (val) => {
-		this.setState({level: Number(val)});
+		this.context.app.setLevel(Number(val));
+	};
+	
+	setTimer = (val) => {
+		this.setState({
+			timer: {
+				val: val,
+				intervalID: setInterval(::this.decrementTimer, 1000)
+			}
+		});
+	};
+	
+	decrementTimer = () => {
+		if (this.state.timer.val > 0)
+			this.setState({
+				timer: _.merge({}, this.state.timer, {
+					val: --this.state.timer.val
+				})
+			});
+		else 
+			this.clearTimer();
+	};
+	
+	clearTimer = () => {
+		clearInterval(this.state.timer.intervalID);
+		this.setState({
+			timer: {
+				val: 0,
+				intervalID: null
+			}
+		})
 	};
 	
 	componentDidMount() {
@@ -35,16 +72,30 @@ export default class GameWrapper extends React.Component {
 				onChange: this.onLevelChange
 			})
 	}
+	
+	get difficulty() {
+		return [
+			'Easy',
+			'Normal',
+			'Hard'
+		][this.context.difficulty - 1]
+	}
 
 	render() {
 		const children = React.Children.map(
 			this.props.children, 
-			(child) => React.cloneElement(child, this.state));
+			(child) => React.cloneElement(child, {
+				timer: {
+					val: this.state.timer.val,
+					set: this.setTimer,
+					clear: this.clearTimer
+				}
+			}));
 
 		return (
 			<div className='game-container'>
 				<div className="ui game-wrapper container">
-					<div className="options-container">
+					<div className={classnames('options-container', {hide: this.context.freePlayMode})}>
 						<div className="ui huge primary difficulty dropdown button">
 							<span className="text">Difficulty</span>
 							<div className="menu">
@@ -64,6 +115,30 @@ export default class GameWrapper extends React.Component {
 						</div>
 						
 					</div>
+
+					<div className="ui four statistics meta-container">
+						<div className="ui statistic score">
+							<div className="label">Current Score</div>
+							<div className="value">{this.context.playerData.score || '0'}</div>
+						</div>
+
+						<div className="ui statistic timer">
+							<div className="label">Bonus Score Remaining</div>
+							<div className="value">{this.state.timer.val}</div>
+						</div>
+
+						<div className="ui statistic level">
+							<div className="label">Level</div>
+							<div className="value">{this.context.level}</div>
+						</div>
+
+						<div className="ui statistic difficulty">
+							<div className="label">Difficulty</div>
+							<div className="text value">{this.difficulty}</div>
+						</div>
+						
+					</div>
+					
 					{children}
 				</div>
 			</div>
