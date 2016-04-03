@@ -20,11 +20,13 @@ We're always open to fresh ideas that helps us with our goal of Cyber Security e
 ## Getting started
 1. Clone the repo with `git clone https://github.com/uwfcodefest/cyberdefense.git`
 2. Install dependencies with `npm i -g bower && npm i && bower i`
-3. Run `npm run dev` to start the app, or `npm run dev:dbg` to start the app with debugging output enabled
+3. Compile app assets by running `npm run build`
+    - If on windows, run `npm run build:win`
+4. Run `npm run dev` to start the app, or `npm run dev:dbg` to start the app with debugging output enabled
     - If on windows, use `npm run dev:win` or `npm run dev:dbg:win`, respectively
-4. Open a web browser and view the app at `localhost:8888`
-5. ...
-6. Profit!
+5. Open a web browser and view the app at `localhost:8888`
+6. ...
+7. Profit!
 
 # Get in touch
 Connect with us on Gitter, here's our channel: https://gitter.im/uwfcodefest/cyberdefense
