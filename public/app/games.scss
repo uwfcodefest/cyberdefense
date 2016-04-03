@@ -2,7 +2,7 @@
 
 
 .game-container {
-	margin-top: 2em;
+	margin: 2em 0;
 }
 
 .game {
@@ -69,3 +69,21 @@
 		}
 	}
 }
+
+.game-footer {
+	margin-top:4em;
+	
+	.ui.submit.button {
+		background-color: $blue;
+		&:hover {
+			background-color: lighten($blue, 10%)
+		}
+		color: white;
+	}
+	
+	.buttons {
+		margin-top: 2em;
+		text-align: left;
+	}
+}
+	

@@ -19,8 +19,9 @@
 */
 
 html, body {
-	height: 100%;
+	min-height: 100vh;
 	background-color: $bg-color;
+	height: auto;
 }
 
 body {
@@ -104,6 +105,27 @@ body {
 		z-index: -1;
 	}
 
+}
+
+.ui.dimmer {
+	background-color: rgba(0,0,0, .6);
+}
+
+.ui.modal {
+	.header {
+		font-size: 4em;
+	}
+	.content {
+		font-size: 2em;
+		
+		.ui.divider {
+			border-bottom: 1px solid rgba(255,255,255,.75);
+			
+			&.fat {
+				border-bottom: 1px solid rgba(255,255,255,.75);
+			}
+		}
+	}
 }
 
 

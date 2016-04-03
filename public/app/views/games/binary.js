@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 import GameHeader from './components/header';
 import GameBody from './components/body';
+import GameFooter from './components/footer';
 import BinaryInput from './components/binaryInput';
 
 import classnames from 'classnames';
@@ -24,7 +25,8 @@ export default class BinaryGame extends React.Component {
 	
 	state = {
 		answers: {},
-		listeners: []
+		listeners: [],
+		score: 10
 	};
 	
 	componentWillMount() {
@@ -97,6 +99,28 @@ export default class BinaryGame extends React.Component {
 		return 2 ** this.getNumPuzzleColumns(this.props.difficulty) - 1
 	}
 	
+	submit = () => {
+		const correct = _.every(_.map(this.state.puzzleData, (row, i) => {
+			return this.checkAnswer(i)
+		}));
+		
+		if (correct) {
+			$('.ui.success.modal')
+				.modal({
+					blurring: true,
+					closable  : false,
+					onApprove : function() {
+						window.alert('Approved!');
+					}
+				})
+				.modal('show')
+		}
+		else {
+			$('.ui.error.modal')
+				.modal('show')
+		}
+	};
+	
 	render() {
 		console.log(this.state, this.props);
 		return (
@@ -117,7 +141,7 @@ export default class BinaryGame extends React.Component {
 								{_.map(row.data, (num, i) =>
 									<div className="ui column" key={i}>{num}</div>
 								)}
-								<div className={classnames("ui transparent answer input column", {correct: this.checkAnswer(i)})}>
+								<div className={classnames("ui transparent answer input column")}>
 									<BinaryInput 
 										max={this.maxValue}
 										onChange={this.updateAnswer(i)}
@@ -126,9 +150,51 @@ export default class BinaryGame extends React.Component {
 							</div>
 						)}
 						
-						
 					</div>
 				</GameBody>
+				<GameFooter onSubmit={this.submit}/>
+				
+				<div className="ui basic blurring modal success">
+					<h1 className="ui header">
+						Good Job!
+					</h1>
+					<div className="ui content divided grid">
+						<div className="row">
+							<div className="ui eight wide column">Difficulty Bonus</div>
+							<div className="ui four wide column">+{this.props.difficulty * 25}</div>
+						</div>
+						<div className="row">
+							<div className="ui eight wide column">Level Bonus</div>
+							<div className="ui four wide column">+{this.props.level * 25}</div>
+						</div>
+						<div className="row">
+							<div className="ui eight wide column">Time Bonus</div>
+							<div className="ui four wide column">+15</div>
+						</div>
+						<div className="ui divider"></div>
+						<div className="row">
+							<div className="ui eight wide column">Points Earned</div>
+							<div className="ui four wide column">+15</div>
+						</div>
+						<div className="ui fat divider"></div>
+						<div className="row">
+							<div className="ui eight wide column">Total Points</div>
+							<div className="ui four wide column">15 + 15 = 30</div>
+						</div>
+					</div>
+					<div className="actions">
+						<div className="ui huge positive button">OK</div>
+					</div>
+				</div>
+
+				<div className="ui basic blurring modal error">
+					<h1 className="ui header">
+						WRONG!
+					</h1>
+					<div className="actions">
+						<div className="ui huge positive button">Try again</div>
+					</div>
+				</div>
 			</div>
 		);
 	}

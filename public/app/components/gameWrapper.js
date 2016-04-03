@@ -16,14 +16,23 @@ export default class GameWrapper extends React.Component {
 	
 	onDifficultyChange = (val) => {
 		this.setState({difficulty: Number(val)});
-		console.log(val);
+	};
+
+	onLevelChange = (val) => {
+		this.setState({level: Number(val)});
 	};
 	
 	componentDidMount() {
 		$(ReactDOM.findDOMNode(this))
-			.find('.ui.dropdown')
+			.find('.ui.dropdown.difficulty')
 			.dropdown({
 				onChange: this.onDifficultyChange
+			});
+
+		$(ReactDOM.findDOMNode(this))
+			.find('.ui.dropdown.level')
+			.dropdown({
+				onChange: this.onLevelChange
 			})
 	}
 
@@ -32,13 +41,11 @@ export default class GameWrapper extends React.Component {
 			this.props.children, 
 			(child) => React.cloneElement(child, this.state));
 
-		console.log(this.state);
-		
 		return (
 			<div className='game-container'>
-				<div className="game-wrapper">
+				<div className="ui game-wrapper container">
 					<div className="options-container">
-						<div className="ui primary dropdown button">
+						<div className="ui huge primary difficulty dropdown button">
 							<span className="text">Difficulty</span>
 							<div className="menu">
 								<div className="item" data-value='1'>Easy</div>
@@ -46,6 +53,16 @@ export default class GameWrapper extends React.Component {
 								<div className="item" data-value='3'>Hard</div>
 							</div>
 						</div>
+
+						<div className="ui huge primary level dropdown button">
+							<span className="text">Level</span>
+							<div className="menu">
+								<div className="item" data-value='1'>1</div>
+								<div className="item" data-value='2'>2</div>
+								<div className="item" data-value='3'>3</div>
+							</div>
+						</div>
+						
 					</div>
 					{children}
 				</div>
