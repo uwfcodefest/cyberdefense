@@ -9,7 +9,7 @@ import {Link} from 'react-router';
 export default class Introduction extends React.Component {
 	render() {
 		return (
-			<div className="introduction view ui container">
+			<div className="introduction view ui segment container">
 				<div className="ui segment">
 					<h1 className='ui header'>Introduction</h1>
 

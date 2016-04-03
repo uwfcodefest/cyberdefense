@@ -71,7 +71,7 @@ export default class MissionControl extends React.Component {
 									</div>
 								</a>
 
-								<a href='/missioncontrol#' className="ui locked card">
+								<a href='/game/missioncontrol#' className="ui locked card">
 									<div className="content">
 										<h1 className="ui header">
 											Locked
@@ -82,7 +82,7 @@ export default class MissionControl extends React.Component {
 									</div>
 								</a>
 
-								<a href='/missioncontrol#' className="ui locked card">
+								<a href='/game/missioncontrol#' className="ui locked card">
 									<div className="content">
 										<h1 className="ui header">
 											Locked
