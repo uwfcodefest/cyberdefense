@@ -1,7 +1,16 @@
 $().ready(function () {
-    // setup default min/max timer range for random draw
-    attack_min = 100 ;
-    attack_max = 2000 ;
+
+    // Configure the frequency of attacks
+    attack_min = 30;
+    attack_max = 400;
+
+    //Stores the audio playing settings
+    var should_play_audio = false;
+
+
+    $('.toggle-audio').on('click', function(){
+        should_play_audio = !should_play_audio;
+    });
 
     // add/change the attack types here
     attack_type = [ "any port scan in a storm", "ssh brutish force", "Thought Leader Tweet",
@@ -58,6 +67,7 @@ $().ready(function () {
     var destination = $.getUrlVar("destination");
     var greenattacks = $.getUrlVar("greenattacks");
     var redattacks = $.getUrlVar("redattacks");
+
 
     snd_id = "starwars" ;
     if (typeof tng !== 'undefined') { snd_id = "tng" ; }
@@ -134,17 +144,17 @@ $().ready(function () {
 
     };
 
-    // need to make this dynamic since it's approximated from sources
 
-    var countries = [9,22,29,49,56,58,78,82,102,117,139,176,186] ;
+    //Ids of the countries to show requests between
+    var countries = [9,22,29,49,56,58,78,82,102,117,139,176,186];
+
+    //Relative weight for the countries to show the connections between countries
     var weight = [0.000,0.001,0.004,0.008,0.009,0.037,0.181,0.002,0.000,0.415,0.006,0.075,0.088];
 
-    // the fun begins!
-    //
-    // pretty simple setup ->
-    // * make base Datamap
-    // * setup timers to add random events to a queue
-    // * update the Datamap
+
+    // * Make DataMap
+    // * Set Up Timers to Execute Events and Add to Queue
+    // * Update the Map
 
     var map = new Datamap({
 
@@ -158,7 +168,7 @@ $().ready(function () {
         geographyConfig: {
             dataUrl: null,
             hideAntarctica: true,
-            borderWidth: 0.75,
+            borderWidth: 0.85,
             borderColor: '#4393c3',
             popupTemplate: function(geography, data) {
                 return '<div class="hoverinfo" style="color:white;background:black">' +
@@ -175,9 +185,28 @@ $().ready(function () {
 
     // we read in a modified file of all country centers
     var centers = [] ;
-    d3.tsv("data/country_centroids_primary.csv", function(data) { centers = data; });
-    d3.csv("data/samplatlong.csv", function(data) { slatlong = data; });
-    d3.csv("data/cnlatlong.csv", function(data) { cnlatlong = data; });
+
+    var slatlong = [];
+
+    var cnlatlong = [];
+
+    //Load the data into
+    d3.tsv("data/country_centroids_primary.csv", function(data) {
+        centers = data;
+    });
+
+
+    d3.csv("data/samplatlong.csv", function(data) {
+        slatlong = data;
+
+        // start the ball rolling!
+        attacks.init();
+    });
+
+
+    d3.csv("data/cnlatlong.csv", function(data) {
+        cnlatlong = data;
+    });
 
     // setup structures for the "hits" (arcs)
     // and circle booms
@@ -200,9 +229,7 @@ $().ready(function () {
         interval: 1,
 
         init: function(){
-            setTimeout(
-                jQuery.proxy(this.getData, this),
-                this.interval
+            setTimeout(jQuery.proxy(this.getData, this), this.interval
             );
         },
 
@@ -226,7 +253,7 @@ $().ready(function () {
                 snd_id = audio_type[Math.floor((Math.random() * audio_type.length))];
             }
             // no guarantee of sound playing w/o the load - stupid browsers
-            if (typeof nofx === 'undefined') {
+            if (typeof nofx === 'undefined' && (should_play_audio === true)) {
                 document.getElementById(snd_id).load();
                 document.getElementById(snd_id).play();
             }
@@ -241,6 +268,7 @@ $().ready(function () {
             var center_id = "";
             which_attack = attack_type[Math.floor((Math.random() * attack_type.length))];
             var srccountry = slatlong[src]["country"];
+
             // "Hi, Mandiant!!"
             if (typeof china_mode !== 'undefined') {
                 srclat = cnlatlong[src].lat;
@@ -339,7 +367,6 @@ $().ready(function () {
             map.arc(hits, {strokeWidth: 2, strokeColor: strokeColor});
 
             // add boom to the bubbles queue
-
             boom.push( { radius: 7, latitude: +dstlat, longitude: +dstlong,
                 fillOpacity: 0.5, attk: which_attack} );
             map.bubbles(boom, {
@@ -359,13 +386,12 @@ $().ready(function () {
             // pick a new random time and start the timer again!
             this.interval = getRandomInt(attack_min, attack_max);
             this.init() ;
-        },
+        }
 
     };
 
-    // start the ball rolling!
-    attacks.init();
+
 
     // lazy-dude's responsive window
-    d3.select(window).on('resize', function() { location.reload(); });
+    //d3.select(window).on('resize', function() { location.reload(); });
 });
