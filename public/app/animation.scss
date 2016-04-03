@@ -1,0 +1,37 @@
+@import 'includes';
+
+/* Animation Example
+@include keyframes(slide-down) {
+	0% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 0;
+	}
+}
+
+.example {
+	width: 100px;
+	height: 100px;
+	background: black;
+	@include animation('slide-down 5s 3');
+}
+*/
+
+.fade-enter, .fade-appear {
+	opacity: 0;
+}
+
+.fade-enter.fade-enter-active, .fade-appear.fade-appear-active {
+	opacity: 1;
+	@include transition(opacity .4s ease-in)
+}
+
+.fade-leave {
+	opacity: 1;
+}
+
+.fade-leave.fade-out-leave-active {
+	opacity: 0;
+	@include transition(opacity .4s ease-in)
+}

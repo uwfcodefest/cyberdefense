@@ -1,0 +1,110 @@
+@import "includes";
+
+/* Animation Example
+@include keyframes(slide-down) {
+	0% {
+		opacity: 1;
+	}
+	90% {
+		opacity: 0;
+	}
+}
+
+.example {
+	width: 100px;
+	height: 100px;
+	background: black;
+	@include animation('slide-down 5s 3');
+}
+*/
+
+html, body {
+	height: 100%;
+	background-color: $bg-color;
+}
+
+body {
+	position: relative;
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+.overflow-ellipsis {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.link {
+	cursor: pointer;
+}
+
+.ui.container.nav-container {
+	margin: 1rem 0 2rem;
+
+	.header.item {
+		font-weight: 700;
+	}
+}
+
+#app {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: $gray-ww;
+}
+
+.view {
+	padding: 0;
+	&.menu {
+		flex: 1;
+		min-height: 100vh;
+
+		.segment {
+			min-height: 100vh;
+			align-items: center;
+			justify-content: center;
+			display: flex;
+
+			.text.container {
+				margin-top: -5em;
+			}
+
+			.button-container{
+				.button {
+					width: 80%;
+					margin: 1em auto auto;
+					&:first-child {
+						margin-top:0;
+					}
+				}
+			}
+		}
+	}
+}
+
+#modal-overlay {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: #000;
+	opacity: 0;
+	z-index: 999;
+
+	@include transition(opacity .2s ease-in-out);
+
+	&.active {
+		opacity: .3;
+	}
+
+	&.hidden {
+		z-index: -1;
+	}
+
+}
+
+
+@import "overrides";

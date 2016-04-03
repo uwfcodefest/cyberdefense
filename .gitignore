@@ -1,1 +1,10 @@
 .idea/
+.vagrant/
+node_modules/
+bower_components/
+assets/css/
+assets/fonts/
+assets/js/
+assets/index.html
+data/
+server.pid
