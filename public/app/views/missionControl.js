@@ -6,6 +6,10 @@ import _ from 'lodash';
 import classnames from 'classnames';
 
 export default class MissionControl extends React.Component {
+	static defaultProps = {
+		showAttackDelay: 1000
+	};
+	
 	state = {
 		showDifficulties: false,
 		showAttack: false
@@ -35,7 +39,7 @@ export default class MissionControl extends React.Component {
 	componentDidMount() {
 		setTimeout(() => {
 			this.setState({showAttack: true})
-		}, 3000)
+		}, this.props.showAttackDelay)
 	}
 	
 	render() {
