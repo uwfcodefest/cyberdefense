@@ -35,6 +35,7 @@ var all = {
 	},
 	production = {
 		dataDir: '/data',
+		interface: '0.0.0.0',
 		db: process.env.DB_URI || 'http://db:7474',
 		port: process.env.PORT || 80
 	},

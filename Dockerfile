@@ -7,7 +7,7 @@ WORKDIR /app
 ENV NPM_CONFIG_LOGLEVEL warn
 ENV NODE_ENV production
 ENV PORT 80
-ENV DEBUG app:*,lib:*
+ENV DEBUG app:*
 
 # Install deps
 COPY package.json package.json
@@ -18,7 +18,6 @@ COPY server server
 COPY public public
 COPY assets assets
 COPY common common
-COPY config config
 COPY .babelrc .babelrc
 COPY server.js server.js
 

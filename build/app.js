@@ -21,7 +21,7 @@ function makeBundle(cb) {
 		extensions: ['.jsx'],
 		transform: [babelify],
 		debug: process.env.NODE_ENV != 'production',
-		cache: {}, packageCache: {}, fullPaths: true
+		cache: {}, packageCache: {}, fullPaths: false
 	})
 		.external(pack.paths.src.vendor.deps.concat(pack.paths.src.vendor.libs))
 		.on('error', utils.onErr)
