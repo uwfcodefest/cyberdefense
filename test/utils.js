@@ -1,6 +1,5 @@
 /*eslint-env node*/
-var debug = require('debug')('app:testing'),
-	config = require('../server/config');
+var uuid = require('node-uuid');
 
 module.exports.responseSuccess = function (res) {
 	return JSON.parse(res.text).success;
@@ -16,13 +15,7 @@ module.exports.responses = {
 };
 
 module.exports.getUID = function (base) {
-	function rand() {
-		return Math.floor((1 + Math.random()) * 0x10000)
-			.toString(16)
-	}
-
-	return base + '-' + rand();
+	return base + '-' + uuid.v4();
 };
-
 
 global.utils = module.exports;

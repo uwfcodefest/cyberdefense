@@ -12,7 +12,7 @@ import MissionControl from './views/missionControl';
 import HighScores from './views/highscores';
 
 import GameWrapper from './components/gameWrapper';
-import BinaryGame from './views/games/binary';
+import BinaryGameWrapper from './views/games/binaryWrapper';
 
 
 const Routes = (
@@ -22,7 +22,7 @@ const Routes = (
 		<Route component={Introduction} path='/introduction'/>
 		<Route component={HighScores} path='/highscores'/>
 		<Route component={GameWrapper} path='/game'>
-			<Route component={BinaryGame} path='/game/binary'/>
+			<Route component={BinaryGameWrapper} path='/game/binary'/>
 			<Route component={MissionControl} path='/game/missioncontrol'/>
 		</Route>
 	</Route>
