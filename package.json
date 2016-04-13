@@ -134,6 +134,7 @@
           "react-dom",
           "react-router",
           "lodash",
+          "redux",
           "q",
           "validate.js",
           "moment"

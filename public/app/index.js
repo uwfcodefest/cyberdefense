@@ -6,8 +6,17 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import semantic from 'semantic';
 import {match, browserHistory, Router} from 'react-router';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
 
 import Routes from './routes';
+import reducers from './reducers/index';
+import * as middleware from './middleware';
+
+const store = createStore(
+	reducers,
+	applyMiddleware(middleware.logger, middleware.crashReporter)
+);
 
 route();
 
@@ -16,7 +25,11 @@ browserHistory.listen((loc) => {
 });
 
 function render(props) {
-	ReactDOM.render(<Router {...props}/>, document.querySelector('body'));
+	ReactDOM.render(
+		<Provider store={store}>
+			<Router {...props}/>
+		</Provider>
+		, document.querySelector('body'));
 }
 
 function route() {

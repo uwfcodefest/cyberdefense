@@ -6,6 +6,8 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 import classnames from 'classnames';
 
+import gameActions from '../actions/game';
+
 export default class GameWrapper extends React.Component {
 	state = {
 		timer: {
@@ -19,15 +21,20 @@ export default class GameWrapper extends React.Component {
 		level: React.PropTypes.number.isRequired,
 		difficulty: React.PropTypes.number.isRequired,
 		app: React.PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 		router: React.PropTypes.object.isRequired
 	};
 
 	onDifficultyChange = (val) => {
-		this.context.app.setDifficulty(Number(val));
+		this.context.store.dispatch(
+			gameActions.setDifficulty(Number(val))
+		);
 	};
 
 	onLevelChange = (val) => {
-		this.context.app.setLevel(Number(val));
+		this.context.store.dispatch(
+			gameActions.setLevel(Number(val))
+		);
 	};
 	
 	setTimer = (val) => {
@@ -79,7 +86,7 @@ export default class GameWrapper extends React.Component {
 			'Easy',
 			'Normal',
 			'Hard'
-		][this.context.difficulty - 1]
+		][this.context.store.getState().game.difficulty - 1]
 	}
 	
 	get onMissionControlPage() {
@@ -87,6 +94,8 @@ export default class GameWrapper extends React.Component {
 	}
 
 	render() {
+		const appState = this.context.store.getState();
+		
 		const children = React.Children.map(
 			this.props.children, 
 			(child) => React.cloneElement(child, {
@@ -124,7 +133,7 @@ export default class GameWrapper extends React.Component {
 					<div className="ui four statistics meta-container">
 						<div className="ui statistic score">
 							<div className="label">Current Score</div>
-							<div className="value">{this.context.playerData.score || '0'}</div>
+							<div className="value">{appState.player.score || '0'}</div>
 						</div>
 						
 						<div className={classnames('ui statistic timer', {hide: this.onMissionControlPage})}>
@@ -134,7 +143,7 @@ export default class GameWrapper extends React.Component {
 
 						<div className={classnames('ui statistic level', {hide: this.onMissionControlPage})}>
 							<div className="label">Level</div>
-							<div className="value">{this.context.level}</div>
+							<div className="value">{appState.game.level}</div>
 						</div>
 
 						<div className={classnames('ui statistic difficulty', {hide: this.onMissionControlPage})}>

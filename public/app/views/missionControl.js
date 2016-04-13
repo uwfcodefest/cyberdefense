@@ -5,8 +5,6 @@ import React from 'react';
 import _ from 'lodash';
 import classnames from 'classnames';
 
-import {Link} from 'react-router';
-
 export default class MissionControl extends React.Component {
 	state = {
 		showDifficulties: false,
@@ -14,10 +12,7 @@ export default class MissionControl extends React.Component {
 	};
 
 	static contextTypes = {
-		playerData: React.PropTypes.object.isRequired,
-		level: React.PropTypes.number.isRequired,
-		difficulty: React.PropTypes.number.isRequired,
-		app: React.PropTypes.object.isRequired,
+		store: React.PropTypes.object.isRequired,
 		router:React.PropTypes.object.isRequired
 	};
 
@@ -30,7 +25,10 @@ export default class MissionControl extends React.Component {
 	launchGame = (difficulty) => {
 		return () => {
 			this.context.router.push('/game/binary');
-			this.context.app.setDifficulty(difficulty);
+			this.context.store.dispatch({
+				type: 'SET_DIFFICULTY',
+				payload: difficulty
+			});
 		}
 	};
 	

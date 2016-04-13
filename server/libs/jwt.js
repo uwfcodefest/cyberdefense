@@ -1,11 +1,11 @@
 /*eslint-env node*/
-import fs from 'fs';
+// import fs from 'fs';
 import jwt from 'jsonwebtoken';
 import q from 'q';
-import config from '../config';
+// import config from '../config';
 
-const pub = fs.readFileSync(config.auth.jwt.publicKey);
-const key = fs.readFileSync(config.auth.jwt.secretKey);
+// const pub = fs.readFileSync(config.auth.jwt.publicKey);
+// const key = fs.readFileSync(config.auth.jwt.secretKey);
 
 export function sign(data, ops = {}) {
 	return q.Promise((resolve) => {

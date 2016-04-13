@@ -19,18 +19,18 @@ export default class BinaryGame extends React.Component {
 		baseColumns: 3,
 		levelScale: 2,
 		difficultyScale: 1,
+		difficulty: 1,
+		level: 1,
 		timer: {
 			val: 0,
 			set: () => {},
 			clear: () => {}
-		}
+		},
+		addScore: () => {},
+		setDifficulty: () => {}
 	};
 
 	static contextTypes = {
-		playerData: React.PropTypes.object.isRequired,
-		level: React.PropTypes.number.isRequired,
-		difficulty: React.PropTypes.number.isRequired,
-		app: React.PropTypes.object.isRequired,
 		router:React.PropTypes.object.isRequired
 	};
 	
@@ -46,7 +46,7 @@ export default class BinaryGame extends React.Component {
 	};
 	
 	componentWillMount() {
-		this.props.timer.set(20 * this.context.difficulty -  5 * (this.context.difficulty - 1));
+		this.props.timer.set(20 * this.props.difficulty -  5 * (this.props.difficulty - 1));
 
 		this.context.router.setRouteLeaveHook(
 			this.props.route,
@@ -54,8 +54,8 @@ export default class BinaryGame extends React.Component {
 		);
 
 		this.setState({
-			puzzleData: this.getPuzzleData(this.context.difficulty, this.context.level),
-			helperData: this.getHelperData(this.context.difficulty)
+			puzzleData: this.getPuzzleData(this.props.difficulty, this.props.level),
+			helperData: this.getHelperData(this.props.difficulty)
 		})
 	}
 	
@@ -69,16 +69,20 @@ export default class BinaryGame extends React.Component {
 			.modal('attach events', '.info.button', 'show');
 	}
 	
-	componentWillReceiveProps(nextProps, nextContext) {
-		if (nextContext.difficulty != this.context.difficulty ||
-			nextContext.level != this.context.level) {
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.difficulty != this.props.difficulty ||
+			nextProps.level != this.props.level) {
 			this.setState({
-				puzzleData: this.getPuzzleData(nextContext.difficulty, nextContext.level),
-				helperData: this.getHelperData(nextContext.difficulty),
+				puzzleData: this.getPuzzleData(nextProps.difficulty, nextProps.level),
+				helperData: this.getHelperData(nextProps.difficulty),
 				answers: {}
 			});
 			this.resetAnswers();
 		}
+	}
+	
+	componentWillUnmount() {
+		this.props.timer.clear();
 	}
 	
 	getPuzzleData = (difficulty, level) => 
@@ -154,7 +158,7 @@ export default class BinaryGame extends React.Component {
 						blurring: true,
 						closable  : false,
 						onApprove : () => {
-							this.context.app.addScore(this.earnedScore);
+							this.props.addScore(this.earnedScore);
 							this.context.router.push('/game/missioncontrol')
 						}
 					})
@@ -168,7 +172,7 @@ export default class BinaryGame extends React.Component {
 					.modal({
 						blurring: true,
 						onDeny : () => {
-							this.context.app.setDifficulty(--this.context.difficulty)
+							this.props.setDifficulty(--this.props.difficulty)
 						}
 					})
 					.modal('show')
@@ -176,15 +180,15 @@ export default class BinaryGame extends React.Component {
 	};
 
 	get maxValue() {
-		return 2 ** this.getNumPuzzleColumns(this.context.difficulty) - 1
+		return 2 ** this.getNumPuzzleColumns(this.props.difficulty) - 1
 	}
 	
 	get difficultyScore() {
-		return this.context.difficulty * 25;
+		return this.props.difficulty * 25;
 	}
 	
 	get levelScore() {
-		return this.context.level * 25;
+		return this.props.level * 25;
 	}
 	
 	get earnedScore() {
@@ -192,7 +196,7 @@ export default class BinaryGame extends React.Component {
 	}
 	
 	get newTotalScore() {
-		return this.context.playerData.score + this.earnedScore;
+		return this.props.score + this.earnedScore;
 	}
 	
 	get earnedHugeScore() {
@@ -256,7 +260,7 @@ export default class BinaryGame extends React.Component {
 						<div className="ui divider"></div>
 						<div className="row">
 							<div className="ui eight wide column">Total Score</div>
-							<div className="ui eight wide column">{this.context.playerData.score} + {this.earnedScore} = {this.newTotalScore}</div>
+							<div className="ui eight wide column">{this.props.score} + {this.earnedScore} = {this.newTotalScore}</div>
 						</div>
 						<div className={classnames('ui divider', {hide: !this.earnedHugeScore})}></div>
 						<div className={classnames('ui grid', {hide: !this.earnedHugeScore})}>
@@ -276,7 +280,7 @@ export default class BinaryGame extends React.Component {
 						Not quite!
 					</h1>
 					<div className="actions">
-						<div className={classnames("ui huge cancel button", {hide: this.context.difficulty > 1 && this.state.tries < 3})}>Lower difficulty and try again</div>
+						<div className={classnames("ui huge cancel button", {hide: this.props.difficulty > 1 && this.state.tries < 3})}>Lower difficulty and try again</div>
 						<div className="ui huge positive button">Try again</div>
 					</div>
 				</div>
