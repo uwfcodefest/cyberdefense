@@ -67,6 +67,14 @@ function vendorCSS(cb) {
 		.pipe(plugins.minifyCss())
 		.pipe(plugins.bytediff.stop())
 		.pipe(gulp.dest(pack.paths.dist.vendor.css.dir))
+		.pipe(plugins.tap(function (file) {
+			// For each CSS file
+			file.contents = new Buffer( // Replace file contents
+					file.contents.toString().replace(/(assets\/fonts)/g, '/' + process.cwd() + '/assets/fonts') // Replace any string in file contents matched by regex
+			);
+		}))
+		.pipe(plugins.concat('vendor.bundle.electron.css'))
+		.pipe(gulp.dest('assets/css'))
 		.on('end', () => {
 			utils.onEnd('Vendor SCSS compiled!')();
 			cb();

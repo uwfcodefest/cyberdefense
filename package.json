@@ -2,7 +2,7 @@
   "name": "CyberDefense",
   "namespace": "cyberdefense",
   "version": "0.0.1",
-  "main": "server.js",
+  "main": "main.js",
   "description": "UWF Codefest 2016 CyberDefense app",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
